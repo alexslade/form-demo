@@ -1,0 +1,49 @@
+<%= f = form_for @changeset, "#", phx_change: :validate, phx_submit: :save %>
+
+    <%= label f, :song %>
+    <%= text_input f, :song, [phx_debounce: :blur] %>
+    <%= error_tag f, :song %>
+
+    <%= label f, :start %>
+    <%= text_input f, :start, [phx_debounce: :blur] %>
+    <%= error_tag f, :start %>
+
+    <%= label f, :custom_intro %>
+
+    <%= label do %>
+    <%= radio_button f, :custom_intro, true %> Yes
+    <% end %>
+    <%= label do %>
+    <%= radio_button f, :custom_intro, false %> No
+    <% end %>
+    <%= error_tag f, :custom_intro %>
+
+    <%= if @changeset.changes[:custom_intro] == true do %>
+        <%= label f, :custom_intro__type, "What kind of intro?" %>
+        <%= label do %>
+            <%= radio_button f, :custom_intro__type, "morning" %> Morning
+        <% end %>
+        <%= label do %>
+            <%= radio_button f, :custom_intro__type, "evening" %> Evening
+        <% end %>
+        <%= error_tag f, :custom_intro__type %>
+
+        <%= Enum.random(0..1000) %>
+    <% end %>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <%= if @changeset.valid? do %>
+        <strong>Valid</strong>
+    <% else %>
+        <%= Kernel.inspect(@changeset) %>
+    <% end %>
+
+    <br/>
+    <br/>
+    <br/>
+    <%= submit "Save", phx_disable_with: "Saving..." %>
+
+</form>
