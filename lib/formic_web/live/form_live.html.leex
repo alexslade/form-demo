@@ -30,18 +30,6 @@
     <% end %>
 
     <br/>
-    <br/>
-    <br/>
-
-    <%= if @changeset.valid? do %>
-        <strong>Valid</strong>
-    <% else %>
-        <%= Kernel.inspect(@changeset) %>
-    <% end %>
-
-    <br/>
-    <br/>
-    <br/>
     <%= submit "Save", phx_disable_with: "Saving..." %>
 
 </form>

@@ -17,8 +17,8 @@ defmodule FormicWeb.Router do
   scope "/", FormicWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
-    live "/new", FormLive, :index
+    live "/", FormLive, :index
+    get "/confirmation", PageController, :confirmation
   end
 
   # Other scopes may use custom stacks.
