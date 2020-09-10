@@ -4,18 +4,18 @@ defmodule Formic.Form do
 
   @primary_key false
   embedded_schema do
-    field :song, :string
-    field :start, :integer
-    field :custom_intro, :boolean
-    field :custom_intro__type, :string
+    field :name, :string
+    field :age, :integer
+    field :pop, :boolean
+    field :pop__course, :string
   end
 
   def changeset(form \\ %__MODULE__{}, params \\ %{}) do
     form
-    |> Changeset.cast(params, ~w[song start custom_intro custom_intro__type]a)
-    |> Changeset.validate_required(~w[song start custom_intro]a)
-    |> validate_followup_questions_answered(%{custom_intro: [:type]})
-    |> Changeset.validate_inclusion(:start, 0..150,
+    |> Changeset.cast(params, ~w[name age pop pop__course]a)
+    |> Changeset.validate_required(~w[name age pop]a)
+    |> validate_followup_questions_answered(%{pop: [:course]})
+    |> Changeset.validate_inclusion(:age, 1..150,
       message: "is invalid. It must be a number greater than 0."
     )
   end

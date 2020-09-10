@@ -1,34 +1,32 @@
 <%= f = form_for @changeset, "#", phx_change: :validate, phx_submit: :save %>
 
-    <%= label f, :song %>
-    <%= text_input f, :song, [phx_debounce: :blur] %>
-    <%= error_tag f, :song %>
+    <%= label f, :name %>
+    <%= text_input f, :name, [phx_debounce: :blur] %>
+    <%= error_tag f, :name %>
 
-    <%= label f, :start %>
-    <%= text_input f, :start, [phx_debounce: :blur] %>
-    <%= error_tag f, :start %>
+    <%= label f, :age %>
+    <%= text_input f, :age, [phx_debounce: :blur] %>
+    <%= error_tag f, :age %>
 
-    <%= label f, :custom_intro %>
+    <%= label f, :pop, "Would you like to receive oral contraception?" %>
 
     <%= label do %>
-    <%= radio_button f, :custom_intro, true %> Yes
+    <%= radio_button f, :pop, true %> Yes
     <% end %>
     <%= label do %>
-    <%= radio_button f, :custom_intro, false %> No
+    <%= radio_button f, :pop, false %> No
     <% end %>
-    <%= error_tag f, :custom_intro %>
+    <%= error_tag f, :pop %>
 
-    <%= if @changeset.changes[:custom_intro] == true do %>
-        <%= label f, :custom_intro__type, "What kind of intro?" %>
+    <%= if @changeset.changes[:pop] == true do %>
+        <%= label f, :pop__course, "Would you like a 3-month prescription or a 12-month prescription?" %>
         <%= label do %>
-            <%= radio_button f, :custom_intro__type, "morning" %> Morning
+            <%= radio_button f, :pop__course, "3_months" %> 3 Months
         <% end %>
         <%= label do %>
-            <%= radio_button f, :custom_intro__type, "evening" %> Evening
+            <%= radio_button f, :pop__course, "12_months" %> 12 Months
         <% end %>
-        <%= error_tag f, :custom_intro__type %>
-
-        <%= Enum.random(0..1000) %>
+        <%= error_tag f, :pop__course %>
     <% end %>
 
     <br/>
