@@ -1,7 +1,7 @@
 defmodule FormicWeb.FormLive do
   use FormicWeb, :live_view
 
-  def mount(_params, %{"_csrf_token" => csrf_token}, socket) do
+  def mount(_params, _session, socket) do
     changeset = Formic.Form.changeset()
     {:ok, assign(socket, changeset: changeset, csrf_token: csrf_token)}
   end
