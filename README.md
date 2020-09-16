@@ -32,3 +32,59 @@ Here's the code for it, with a quick video walkthrough of the important bits. I 
 
 https://github.com/alexslade/form-demo
 [Walkthrough Video (2:40)](https://www.loom.com/share/53ce1fd54c2e4441a5bd50ae90f833b8)
+
+
+## Stack for a Phoenix / LiveView site
+
+* Database
+* Phoenix
+  * Router, controller, data access, .eex templates - all very similar to Rails
+  * HTML served for most pages, no js needed
+  * HTML served for 1st page of interactive content (e.g. forms), no js needed
+    * Same .eex templates as used for normal server-side pages
+    * Different controller (a "live view")
+    * Websocket connection formed
+    * Actions sent from the client to the server
+    * Pages re-rendered server-side and the diff sent over the websocket
+  * Tests can cover complete client/server journey
+  * Good features for end-to-end testing of interactive features, no browser needed, very fast and parallel / multi-core.
+    * You get 90% of the benefits of browser-driven tests, but it's very fast to write and run. Events are simulated and executed server-side, because the frontend would simply be reporting these events to the backend anyway.
+
+### Pros
+* One project, one developer can complete features in a single pass.
+* Much less code.
+* Good end-to-end testing story.
+* Interesting options for form testing, A/B tests, monitoring etc within easy reach. Because we have trivial knowledge of every person connected to each form, progress etc.
+
+### Cons
+* Stateful forms. We are no longer relying on "HATEOAS", there is a long-lived process for each person connected. We have to configure something for when we make deployments, e.g. waiting for sessions to finish before killing the old server. Or storing the form progress on each page (the form in the users browser will retain the info for the page they are on).
+* JS required by default. Though I don't think there is anything major stopping us from creating a graceful fallback for users without JS.
+* If we use Phoenix, then there is a new language in our stack.
+* If we use Rails + StimulusReflex, ruby isn't the best at websockets.
+* Writing / supporting multiple clients from one codebase.
+
+## Stack for API + React
+
+* Database
+* Rails (probably)
+  * Router, controller, data access, template rendering, all as normal
+  * JSON served for all requests
+  * Tests will cover the API
+
+* React server
+  * Consume the API
+  * Some kind of processing/local data store (e.g. Redux)
+  * Tests for the client code, must emulate API data.
+  * Server-side rendering needed for first page loads
+
+### Pros
+
+* Single API serving multiple different clients
+* React is proven and known, easy to find developers
+
+
+### Cons
+
+* Multiple applications
+* End-to-end testing is hard
+* Much more code - more moving parts add complexity and development time.
